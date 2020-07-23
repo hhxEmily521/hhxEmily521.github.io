@@ -228,6 +228,660 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Huanghongxia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hhxEmily521">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/24/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/" itemprop="url">前端面试题整理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-24T00:10:14+08:00">
+                2020-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前端面试题整理"><a href="#前端面试题整理" class="headerlink" title="前端面试题整理"></a>前端面试题整理</h1><h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><h3 id="webpack-loader和plugin的区别"><a href="#webpack-loader和plugin的区别" class="headerlink" title="webpack loader和plugin的区别"></a>webpack loader和plugin的区别</h3><ul>
+<li><p>loader</p>
+<ul>
+<li>用于对模块源码的转换，loader描述了webpack如何处理非javascript模块，并且在buld中引入这些依赖。loader可以将文件从不同的语言（如TypeScript）转换为JavaScript，或者将内联图像转换为data URL。比如说：CSS-Loader，Style-Loader等</li>
+<li>loader是运行在NodeJS中，可以用options对象进行配置。plugin可以为loader带来更多特性。loader可以进行压缩，打包，语言翻译等等。</li>
+<li>loader从模板路径解析，npm install node_modules。也可以自定义loader，命名XXX-loader。</li>
+</ul>
+</li>
+</ul>
+<p>语言类的处理器loader：CoffeeScript，TypeScript，ESNext（Bable）,Sass,Less,Stylus。任何开发技术栈都可以使用webpack</p>
+<ul>
+<li><p>Plugin</p>
+<ul>
+<li>目的在于解决loader无法实现的其他事，从打包优化和压缩，到重新定义环境变量，功能强大到可以用来处理各种各样的任务。</li>
+<li>webpack提供了很多开箱即用的插件：CommonChunkPlugin主要用于提取第三方库和公共模块，避免首屏加载的bundle文件，或者按需加载的bundle文件体积过大，导致加载时间过长，是一把优化的利器。而在多页面应用中，更是能够为每个页面间的应用程序共享代码创建bundle。</li>
+<li>插件可以携带参数，所以在plugins属性传入new实例</li>
+</ul>
+</li>
+<li><p>Mode</p>
+<ul>
+<li>可以在config文件里面配置，也可以在CLI参数中配置：webpack –mode=production（一般会选择在CLI，也就是npm scripts里面进行配置）</li>
+</ul>
+</li>
+<li><p>resolve</p>
+<ul>
+<li>resolver是个库，帮助webpack找到bundle需要引入的模块代码，打包时，webpack使用enhanced-resolve来解析路径。 </li>
+</ul>
+</li>
+</ul>
+<h3 id="热更新原理"><a href="#热更新原理" class="headerlink" title="热更新原理"></a>热更新原理</h3><ul>
+<li><p>首先通过查看代码 webpack-hot-middleware/client 发现通信是用 window.EventSource 实现,那 EventSource 是什么东西呢？</p>
+<ul>
+<li>EventSource 是 HTML5 中 Server-sent Events 规范的一种技术实现。EventSource 接口用于接收服务器发送的事件。它通过HTTP连接到一个服务器，以text/event-stream 格式接收事件, 不关闭连接。通过 EventSource 服务端可以主动给客户端发现消息，使用的是 HTTP协议，单项通信，只能服务器向浏览器发送； 与 WebSocket 相比轻量，使用简单，支持断线重连。</li>
+</ul>
+</li>
+<li><p>Webpack编译期，为需要热更新的 entry 注入热更新代码(EventSource通信)</p>
+</li>
+<li><p>页面首次打开后，服务端与客户端通过 EventSource 建立通信渠道，把下一次的 hash 返回前端</p>
+</li>
+<li><p>客户端获取到hash，这个hash将作为下一次请求服务端 hot-update.js 和 hot-update.json的hash</p>
+</li>
+<li><p>修改页面代码后，Webpack 监听到文件修改后，开始编译，编译完成后，发送 build 消息给客户端</p>
+</li>
+<li><p>客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档<br>hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新。</p>
+</li>
+</ul>
+<h3 id="Sourcemap-是什么？有什么作用？生产环境中应该怎么用？"><a href="#Sourcemap-是什么？有什么作用？生产环境中应该怎么用？" class="headerlink" title="Sourcemap 是什么？有什么作用？生产环境中应该怎么用？"></a>Sourcemap 是什么？有什么作用？生产环境中应该怎么用？</h3><ul>
+<li><p>什么是sourcemap</p>
+<ul>
+<li>我们在打包中，将开发环境中源代码经过压缩，去空格，babel编译转化，会造成无法debug的问题。sourcemap就是构建了处理前的代码和处理后的代码之间的桥梁</li>
+</ul>
+</li>
+<li><p>什么是DataURL</p>
+<ul>
+<li><p>在Data URL协议中，图片被转换成base64编码的字符串形式，并存储在URL中，冠以mime-type。</p>
+<ul>
+<li>I）访问外部资源受限</li>
+<li>II）图片体积小，占用一个HTTP会话资源浪费</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Webpack中的Sourcemap</p>
+<ul>
+<li><p>eval</p>
+<ul>
+<li>每一个模块都执行eval()过程，并且会追加//@ sourceURL</li>
+</ul>
+</li>
+<li><p>eval-source-map</p>
+<ul>
+<li>每一个模块在执行eval()过程之后，并且会为每一个模块生成sourcemap文件，生成的sourcemap文件通过DataURL的方式添加</li>
+</ul>
+</li>
+<li><p>cheap-eval-source-map</p>
+<ul>
+<li>跟eval-source-map相同，唯一不同的就是增加了”cheap”，”cheap”是指忽略了行信息。这个属性同时也不会生成不同loader模块之间的sourcemap</li>
+</ul>
+</li>
+<li><p>cheap-module-eval-source-map</p>
+<ul>
+<li>与cheap-eval-source-map相同，但是包含了不同loader模块之间的sourcemap</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>sourcemap</p>
+<ul>
+<li><p>eval</p>
+<ul>
+<li>eval会将每一个module模块，执行eval，执行后不会生成sourcemap文件，仅仅是在每一个模块后，增加sourceURL来关联模块处理前后的对应关系<br>因为不需要生成模块的sourcemap，因此打包的速度很快</li>
+</ul>
+</li>
+<li><p>soure-map</p>
+<ul>
+<li><p>source-map会为每一个打包后的模块生成独立的soucemap文件</p>
+<ul>
+<li>打包后的模块在模块后面会对应引用一个.map文件，同时在打包好的目录下会针对每一个模块生成相应的.map文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>inline</p>
+<ul>
+<li><p>与source-map不同，增加inline属性后，不会生成独立的.map文件，而是将.map文件以dataURL的形式插入</p>
+<ul>
+<li>打包好模块后，在sourceMappingURL中直接将.map文件中的内容以DataURL的方式引入 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>cheap</p>
+<ul>
+<li>cheap属性在打包后同样会为每一个模块生成.map文件，但是与source-map的区别在于cheap生成的.map文件会忽略原始代码中的列信息</li>
+</ul>
+</li>
+<li><p>module</p>
+<ul>
+<li>包含了loader模块之间的sourcemap</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>总结</p>
+<ul>
+<li>在开发环境中我们使用：cheap-module-eval-source-map</li>
+<li>在生产环境中我们使用：cheap-module-source-map。 </li>
+</ul>
+</li>
+</ul>
+<h2 id="node"><a href="#node" class="headerlink" title="node"></a>node</h2><h3 id="判断JavaScript当前是在node还是浏览器环境下运行"><a href="#判断JavaScript当前是在node还是浏览器环境下运行" class="headerlink" title="判断JavaScript当前是在node还是浏览器环境下运行"></a>判断JavaScript当前是在node还是浏览器环境下运行</h3><ul>
+<li>node.js使得JavaScript可以运行在服务器端作为一种服务器脚本语言运行</li>
+<li>this === window ? ‘browser’ : ‘node’;</li>
+</ul>
+<h3 id="nodejs组成部分：v8-engine-libuv-builtin-modules-native-modules以及其他辅助服务。"><a href="#nodejs组成部分：v8-engine-libuv-builtin-modules-native-modules以及其他辅助服务。" class="headerlink" title="nodejs组成部分：v8 engine, libuv, builtin modules, native modules以及其他辅助服务。"></a>nodejs组成部分：v8 engine, libuv, builtin modules, native modules以及其他辅助服务。</h3><ul>
+<li>v8 engine：主要有两个作用 1.虚拟机的功能，执行js代码（自己的代码，第三方的代码和native modules的代码）。<br> 2.提供C++函数接口，为nodejs提供v8初始化，创建context，scope等。</li>
+<li>libuv：它是基于事件驱动的异步IO模型库，我们的js代码发出请求，最终由libuv完成，而我们所设置的回调函数则是在libuv触发。</li>
+<li>builtin modules 它是由C++代码写成各类模块，包含了crypto，zlib, file stream etc 基础功能。（v8提供了函数接口，libuv提供异步IO模型库，以及一些nodejs函数，为builtin modules提供服务）。</li>
+<li>native modules：它是由js写成，提供我们应用程序调用的库，同时这些模块又依赖builtin modules来获取相应的服务支持</li>
+</ul>
+<h3 id="单线程异步非阻塞io事件驱动"><a href="#单线程异步非阻塞io事件驱动" class="headerlink" title="单线程异步非阻塞io事件驱动"></a>单线程异步非阻塞io事件驱动</h3><h2 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h2><h3 id="Computed和Watch"><a href="#Computed和Watch" class="headerlink" title="Computed和Watch"></a>Computed和Watch</h3><ul>
+<li><p>computed</p>
+<ul>
+<li>大家都知道computed是有缓存的，所以创建watcher的时候，会传一个配置{ lazy: true }，同时也可以区分这是computed watcher，然后到watcer里面接收到这个对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="初始化内容函数"><a href="#初始化内容函数" class="headerlink" title="初始化内容函数"></a>初始化内容函数</h3><ul>
+<li><p>initLifecycle(vm)<br>initEvents(vm)<br>initRender(vm)<br>callHook(vm, ‘beforeCreate’)<br>initInjections(vm) // resolve injections before data/props<br>initState(vm)<br>initProvide(vm) // resolve provide after data/props<br>callHook(vm, ‘created’)</p>
+<ul>
+<li><p>initLifecycle(vm)</p>
+<ul>
+<li>//子组件创建时父组件已创建<br>vm.$parent = parent<br>vm.$root = parent ? parent.$root : vm</li>
+</ul>
+</li>
+</ul>
+<p>vm.$children = []<br>vm.$refs = {}</p>
+<p>vm._watcher = null<br>vm._inactive = null<br>vm._directInactive = false<br>vm._isMounted = false<br>vm._isDestroyed = false<br>vm._isBeingDestroyed = false</p>
+</li>
+</ul>
+<h3 id="nextTick-原理"><a href="#nextTick-原理" class="headerlink" title="$nextTick 原理"></a>$nextTick 原理</h3><ul>
+<li>让nextTick里的代码放在UI render步骤后面执行，岂不就能访问到更新后的DOM了</li>
+</ul>
+<p>先看promise能不能用，<br>再看MutationObserver能不能用<br>再看setImmediate能不能用<br>再用setTimeout<br>如果几乎都用的宏任务就会导致出现页面卡顿</p>
+<pre><code>- MutationObserver接口提供了监视对DOM树所做更改的能力。它被设计为旧的Mutation Events功能的替代品，该功能是DOM3 Events规范的一部分</code></pre><p>页面更新完毕就用setImmediate（也是宏任务但是比settimeout好）原理执行 nextTick回调函数</p>
+<pre><code>- </code></pre><ul>
+<li>在浏览器执行完宏任务到执行下次宏任务事件循环中我们利用微任务实现了dom更新操作批量一次刷新</li>
+<li>本质上属于 MicroTask，但是它先于所有其他 MicroTask 执行</li>
+</ul>
+<h3 id="数据双向绑定-中通过queueWatch形成异步队列"><a href="#数据双向绑定-中通过queueWatch形成异步队列" class="headerlink" title="数据双向绑定 中通过queueWatch形成异步队列"></a>数据双向绑定 中通过queueWatch形成异步队列</h3><p>然后执行nextTick函数</p>
+<h3 id="能更新数组的7个操作"><a href="#能更新数组的7个操作" class="headerlink" title="能更新数组的7个操作"></a>能更新数组的7个操作</h3><ul>
+<li><p>push、pop、shift、unshift、splice、sort、reverse</p>
+<ul>
+<li>因为无法触发setter<br>用foreach覆盖了Array的7种方法，<br>在里面额外做通知watcher。<br>新增的属性无法进行响应式<br>我们可以用提供的vue$set<br>或者直接赋值arr=[]</li>
+</ul>
+</li>
+</ul>
+<h3 id="父组件传值数据更新"><a href="#父组件传值数据更新" class="headerlink" title="父组件传值数据更新"></a>父组件传值数据更新</h3><ul>
+<li>父组件 <t-title :title.sync="fatherTitle"></t-title><br>子组件更改prop中父组件传过来的值<br>this.$emit(“update:title”, “子组件要改自己的标题”);</li>
+<li>如果有sync属性就会立即run执行更新达到孩子可以修改父组件传过来的值</li>
+</ul>
+<h3 id="update"><a href="#update" class="headerlink" title="_update"></a>_update</h3><ul>
+<li><p>两颗dom树同级比较增、删、改<br>先比对标签是否一致key值是否一致，如果一致就是同一个节点。为了降低时间复杂度即便是只改了标签也是认为不一样的，一样的就执行改操作<br>所以key值要是唯一的稳定的不会变的，<br>源码 src/core/vdom/patch.js<br>700行，500行</p>
+</li>
+<li><p>patchVnode函数</p>
+</li>
+<li><p>updateChildren</p>
+<ul>
+<li><p>结合用户常用操作经常会更改的是开头和结尾的dom新增和删除.很多时候都是队头喝队尾的操作</p>
+<ul>
+<li><p>diff针对这个情况分别用了4个游标，新dom的队头和队尾，老dom的队头和队尾<br>通过这四个节点的交叉比较，经历4次比对<br>如果老旧开都是相同的就老旧开都往后指<br>如果老开和旧尾一样，那就老开 老开加加，旧尾减减</p>
+<ul>
+<li>如果比对完发现不一样<br>就老老实实进行双循环来比对差异</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="keepalive组件"><a href="#keepalive组件" class="headerlink" title="keepalive组件"></a>keepalive组件</h3><ul>
+<li><p>它能够把不活动的组件实例保存在内存中，而不是直接将其销毁，它是一个抽象组件，不会被渲染到真实DOM中，也不会出现在父组件链中</p>
+<ul>
+<li>include与exclude两个属性来允许组件有条件地进行缓存，二者都可以用逗号分隔字符串、正则表达式或一个数组来表示</li>
+</ul>
+</li>
+<li><p>keep-alive提供了两个生命钩子，分别是activated与deactivated<br>缓存的组件不会被mounted， 使用props max 可以控制缓存组件个数</p>
+</li>
+<li><p>Vue.js内部将DOM节点抽象成了一个个的VNode节点，keep-alive组件的缓存也是基于VNode节点的而不是直接存储DOM结构。它将满足条件（include与exclude）的组件在cache对象中缓存起来，在需要重新渲染的时候再将vnode节点从cache对象中取出并渲染</p>
+</li>
+</ul>
+<h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><h3 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h3><ul>
+<li><p>并行执行 </p>
+<ul>
+<li>promise.all([PA,PB]).then((data=&gt;{<br>console.log(data)<br>})</li>
+</ul>
+</li>
+<li><p>顺序执行</p>
+<ul>
+<li>//链式 调用<br>promise.resolve().then(function(){<br>  return  getA()<br>}).then(function(a){<br>   obj.a=a;<br>}).then(function(){<br>  return getB()<br>})</li>
+<li>// 构建队列<br>function queue(arr) {<br>var sequence = Promise.resolve()<br>arr.forEach(function (item) {<br>sequence = sequence.then(item)<br>})<br>return sequence<br>}<br>// 执行队列<br>queue([a, b, c])<br>.then(data =&gt; {<br>console.log(data)// abc<br>})</li>
+</ul>
+</li>
+<li><p>Promise.race</p>
+<ul>
+<li>这个方法比较特别，在执行多个异步操作中，只保留取第一个执行完成的异步操作的结果，其他的方法仍在执行，不过执行结果会被抛弃</li>
+</ul>
+</li>
+</ul>
+<h3 id="async-await"><a href="#async-await" class="headerlink" title="async  await"></a>async  await</h3><ul>
+<li><p>优缺点</p>
+<ul>
+<li>缺点<br>太过串行化<br>用了await 两个调用变成串行的，总的执行时长比并行版本长很多<br>await 等待的是一个表达式这个表达式计算结果是promise对象或者其他值，如果等待的是promise对象 await就会忙起来，会阻塞后面的代码，所以必须要用在async 函数中 ，async函数调用不会造成阻塞，因为内部都封装成了一个promise对象微任务异步执行<br>await 调用的时候一定要放在 try…catch中</li>
+<li>优点，将异步代码编程变成同步风格，可读性强<br>所有主流浏览器都支持异步功能</li>
+</ul>
+</li>
+</ul>
+<h3 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h3><ul>
+<li><p>1、axios的特点有哪些？<br>通过简单的链式then方法将这些功能与核心的promise对象关联</p>
+<ul>
+<li><p>Axios 是一个基于 promise 的 HTTP 库，支持promise所有的API</p>
+</li>
+<li><p>它可以拦截请求和响应</p>
+</li>
+<li><p>它可以转换请求数据和响应数据，并对响应回来的内容自动转换成 JSON类型的数据</p>
+</li>
+<li><p>安全性更高，客户端支持防御 XSRF</p>
+<ul>
+<li><p>XSRF</p>
+<ul>
+<li>跨站请求伪造”(Cross Site Request Forgery)攻击。通过窃取用户cookie，让用户在本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求。防护XSRF攻击的一种方法是设置特殊的 xsrf token，axios实现了对这种方法的支持</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>适配 nodejs 和 浏览器环境</p>
+<ul>
+<li>我们知道 axios 可以用来发送浏览器请求，也可以用于 nodejs 发送服务端请求，主要是因为 axios 内部实现了一个请求适配器adapter:</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>request方法是如何实现拦截器功能</p>
+<ul>
+<li>首先定义了一个数组调用链chain，然后通过unshift将 request interceptors推入数组头部，将response interceptors推入数组尾部。最后通过while这样一个循环执行promise.then来达到链式调用</li>
+<li>axios在初始化的时候调用createInstance创建实例的时候执行了一条utils.extend(instance, context);代码，这行代码执行完后返回的实例就可以通过axios.interceptors去设置拦截器了</li>
+<li>axios对拦截器的实现是通过./lib/core/InterceptorManager模块来管理的，当我们调用axios.interceptors.request.use或者axios.interceptors.response.use添加拦截器时都会执行到InterceptorManager原型上的use()方法</li>
+<li>就是新增到thishandlers而已，对于移除来说，是执行InterceptorManager原型上的eject()方法</li>
+<li>简单的把值设置为null，然后发送axios(config)向服务器发送请求时，在做派发更新前会优先执行请求拦截器，等到数据接收后会执行响应拦截器</li>
+</ul>
+</li>
+</ul>
+<h2 id="小程序优化加载方法"><a href="#小程序优化加载方法" class="headerlink" title="小程序优化加载方法"></a>小程序优化加载方法</h2><h3 id="预渲染，数据缓存先用本地的数据进行填充"><a href="#预渲染，数据缓存先用本地的数据进行填充" class="headerlink" title="预渲染，数据缓存先用本地的数据进行填充"></a>预渲染，数据缓存先用本地的数据进行填充</h3><h3 id="从心理学角度，将页面跳转速度变慢"><a href="#从心理学角度，将页面跳转速度变慢" class="headerlink" title="从心理学角度，将页面跳转速度变慢"></a>从心理学角度，将页面跳转速度变慢</h3><h3 id="分包加载"><a href="#分包加载" class="headerlink" title="分包加载"></a>分包加载</h3><ul>
+<li>修改app.json subPackages</li>
+</ul>
+<h3 id="先请求小程序主体逻辑接口，页面头部信息，等上述请求完毕后再请求资讯，活动资讯等接口"><a href="#先请求小程序主体逻辑接口，页面头部信息，等上述请求完毕后再请求资讯，活动资讯等接口" class="headerlink" title="先请求小程序主体逻辑接口，页面头部信息，等上述请求完毕后再请求资讯，活动资讯等接口"></a>先请求小程序主体逻辑接口，页面头部信息，等上述请求完毕后再请求资讯，活动资讯等接口</h3><h3 id="将图片都放cdn"><a href="#将图片都放cdn" class="headerlink" title="将图片都放cdn"></a>将图片都放cdn</h3><h3 id="将背景图片压缩，精简，只用css部分无法实现的图片"><a href="#将背景图片压缩，精简，只用css部分无法实现的图片" class="headerlink" title="将背景图片压缩，精简，只用css部分无法实现的图片"></a>将背景图片压缩，精简，只用css部分无法实现的图片</h3><h2 id="大多图片加载优化策略"><a href="#大多图片加载优化策略" class="headerlink" title="大多图片加载优化策略"></a>大多图片加载优化策略</h2><h3 id="用css-backgroundurl加很多图片"><a href="#用css-backgroundurl加很多图片" class="headerlink" title="用css backgroundurl加很多图片"></a>用css backgroundurl加很多图片</h3><p>或者用js实现</p>
+<h3 id="加骨架屏优化体验"><a href="#加骨架屏优化体验" class="headerlink" title="加骨架屏优化体验"></a>加骨架屏优化体验</h3><h3 id="分页加载，如滚动到某区域加载后面的图片"><a href="#分页加载，如滚动到某区域加载后面的图片" class="headerlink" title="分页加载，如滚动到某区域加载后面的图片"></a>分页加载，如滚动到某区域加载后面的图片</h3><h3 id="使用PreloadJS库-预加载则会增加服务器前端压力"><a href="#使用PreloadJS库-预加载则会增加服务器前端压力" class="headerlink" title="使用PreloadJS库 预加载则会增加服务器前端压力"></a>使用PreloadJS库 预加载则会增加服务器前端压力</h3><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="应用层（7层的话加上表示层和会话层）"><a href="#应用层（7层的话加上表示层和会话层）" class="headerlink" title="应用层（7层的话加上表示层和会话层）"></a>应用层（7层的话加上表示层和会话层）</h3><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><ul>
+<li>TCP数据包<br>TCP序列化<br>UDP协议</li>
+</ul>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><ul>
+<li>ip协议<br>选址<br>子掩码和子网络划分</li>
+</ul>
+<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><ul>
+<li>以太网<br>总线型拓扑<br>冲突检测<br>mac地址<br>以太网帧<br>ARP协议</li>
+</ul>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><h3 id="从输入url到页面加载完成发生了什么"><a href="#从输入url到页面加载完成发生了什么" class="headerlink" title="从输入url到页面加载完成发生了什么"></a>从输入url到页面加载完成发生了什么</h3><ul>
+<li><p>1dns（网址转化为ip地址）Dns缓存：浏览器是否有过访问分级查询： 本地DNS—&gt;根域名服务器–&gt;com顶级服务器，google.com域名服务器</p>
+</li>
+<li><p>TCP连接（经历三次握手）</p>
+<ul>
+<li><p>TCP是一种面向连接的协议，并提供一种可靠的传输。TCP连接有三个阶段，即：<br>连接建立、数据传输、连接释放</p>
+</li>
+<li><p>为什么是三次：<br>防止已失效的连接请求报文段突然又传送到了服务器端<br>因而产生错误，导致客户端并没有发起新的请求连接，而服务器端一直保持着连接状态，则会白白浪费掉服务器端的资源</p>
+<ul>
+<li>将带有SYN=1标志的请求报文发送给服务器端，等待服务器端的确认</li>
+<li>将带有SYN=1，ACK=1标志的报文发送给客户端</li>
+<li>将带有ACK=1标志的报文发送给服务端</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>发送HTTP请求</p>
+<ul>
+<li><p>HTTP请求报文由请求行，请求报头，请求正文组成</p>
+<ul>
+<li><p>请求行<br>请求方法，请求资源的URL，以及HTTP的版本</p>
+<ul>
+<li>请求方法包括：<br>OPTION, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HTTP缓存优化</p>
+<ul>
+<li><p>强缓存</p>
+<ul>
+<li>当缓存数据库中有客户端需要的数据，客户端直接将数据从其中拿出来使用（如果数据未失效），当缓存服务器没有需要的数据时，客户端才会向服务端请求。</li>
+</ul>
+</li>
+<li><p>协商缓存</p>
+<ul>
+<li>客户端会先从缓存数据库拿到一个缓存的标识，然后向服务端验证标识是否失效，如果没有失效服务端会返回304，这样客户端可以直接去缓存数据库拿出数据，如果失效，服务端会返回新的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务器处理请求，并返回HTTP报文</p>
+<ul>
+<li><p>响应报文的第一行就是状态行</p>
+<ul>
+<li><p>状态码</p>
+<ul>
+<li>状态码都是三位数字的，分为5大类共33种：<br>1** 表示通知信息的。<br>2** 表示成功。<br>3** 表示重定向。例如 301:永久重定向，302：临时重定向，304：未修改协商缓存<br>4** 表示客户的差错。例如 400：错误请求，401：未授权，403：服务器拒绝请求，404：未找到<br>5** 表示服务器端的错误。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>浏览器解析和渲染页面</p>
+<ul>
+<li><p>解析HTML形成DOM树<br>解析CSS形成CSSOM 树<br>合并DOM树和CSSOM树形成渲染树<br>浏览器开始渲染并绘制页面</p>
+<ul>
+<li>回流：DOM结点都是以盒模型形式存在，需要浏览器去计算位置和宽度等，这个过程就是回流。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>重绘：等到页面的宽高，大小，颜色等属性确定下来后，浏览器开始绘制内容，这个过程叫做重绘。<br>非常消耗性能应当减少回流重绘操作</p>
+<pre><code>- 优化内容重绘回流
+
+    - 给图片设置尺寸， 如果图片不设置尺寸，首次载入时，占据空间从 0 到完全出现，上下左右都可能位移，发生回流
+    - 不用使用 table 布局
+    - 能够使用 CSS 实现的效果，尽量使用 CSS 而不使用 JS 实现
+    -  将需要多次重绘的元素独立为 render layer 渲染层， 如设置 absolute， 可以减少重绘范围
+    - 避免使用 CSS 计算表达式calc
+    -  避免使用层级较深的选择器，或者其他一些复杂的选择器，以提高 CSS 渲染效率
+    - 用createDocumentFragment再写入页面中</code></pre><ul>
+<li><p>连接结束（四次挥手）</p>
+<ul>
+<li>FIN：终止控制位，ACK：确认位<br>客户端向其TCP发出带有FIN=1的连接释放报文段，并停止再发送数据，主动关闭TCP连接</li>
+<li>服务器端收到连接释放报文后即发出带有ACK=1的确认报文<br>这时TCP连接处于半关闭状态，即客户端已经没有数据要发送了，但服务器端若发送数据，客户端仍要接收。</li>
+<li>若服务器端已经没有要向客户端发送的数据，就发出带有FIN=1，ACK=1的报文</li>
+<li>在客户端收到服务器的连接释放报文后，必须对此发出确认，即带有ACK=1的报文</li>
+</ul>
+</li>
+</ul>
+<h3 id="http、https"><a href="#http、https" class="headerlink" title="http、https"></a>http、https</h3><ul>
+<li><p>https<br>httpsecurity</p>
+<ul>
+<li>申请ssl证书客户端浏览器会验证ssl（升级为tls）证书的有效性<br>通过客户端浏览器通过随机秘钥+公钥进行  ==非对称和对称加密<br>彼此用私钥进行解密（非对称加密使用了一对密钥，公钥与私钥）</li>
+</ul>
+</li>
+<li><p>httpt通过明文发送接收数据</p>
+</li>
+<li><p>http1.0</p>
+<ul>
+<li>每次都会建立tcp连接<br>每次请求都会马上断开连接下次又需要再次建立连接</li>
+</ul>
+</li>
+<li><p>http1.1</p>
+<ul>
+<li>keep—alive<br>客户端建立连接后不会马上断开连接如果有其他请求重用这个连接减少了建立连接速度<br>需要在头部声明是上一个连接所以头部变大</li>
+<li>缓存处理</li>
+<li>错误通知的管理</li>
+<li>会出现队头阻塞先—请求先返回</li>
+</ul>
+</li>
+<li><p>http2.0</p>
+<ul>
+<li>HTTP2支持二进制传送（实现方便且健壮），HTTP1.x是字符串传送</li>
+<li>HTTP2支持多路复用</li>
+<li>HTTP2采用HPACK压缩算法压缩头部，减小了传输的体积</li>
+<li>HTTP2支持服务端推送</li>
+<li>有的HTTP2.0的请求都在一个TCP链接上</li>
+<li>HTTP2.0性能增强的核心：二进制分帧</li>
+<li>应用层(HTTP2.0)和传输层(TCP or UDP)之间增加一个二进制分帧层</li>
+</ul>
+</li>
+</ul>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="没有模块化标准之前"><a href="#没有模块化标准之前" class="headerlink" title="没有模块化标准之前"></a>没有模块化标准之前</h3><p>我们通过立即执行函数构造一个私有的作用域，再通过闭包的特性，将需要对外暴露的数据和接口输出<br>jQuery的做法就是使用了一个匿名函数形成一个闭包，然后自执行，所有逻辑都在这个闭包中完成，这样不会污染全局变量，也无法在其他地方访问闭包内的变量。最后将 jQuery对象进行暴露，这样在外部就可以通过 jQuery或者 $访问闭包内的其他变量了</p>
+<h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><ul>
+<li><p>Node.js应用由模块（采用的 CommonJS 模块规范）组成。即一个文件就是一个模块，拥有自己独立的作用域，变量和方法都是存在独立作用域内<br>CommonJS 规范下，输出的值只是拷贝</p>
+<ul>
+<li>CommonJS 规范规定，每个模块内部，module变量代表当前模块。这个变量是一个对象，它的 exports属性（即 module.exports）是对外的接口。<br>加载某个模块，其实是加载该模块的 module.exports属性。使用 require方法加载模块</li>
+</ul>
+</li>
+</ul>
+<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><ul>
+<li>AMD 不同于 CommonJS 规范，是异步的，可以说是专为浏览器环境定制的。AMD 规范中定义了如何创建模块、如何输出、如何导入依赖。<br>更加友好的是，require.js 库为我们准备好了一切，我们只需要通过define方法，定义为模块；再通过require方法，加载模块。<br>因为是异步的，模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行</li>
+</ul>
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><ul>
+<li>AMD 需要异步加载模块，而 CMD 可以同步可以异步；<br>CMD 推崇依赖就近，AMD 推崇依赖前置</li>
+</ul>
+<h3 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h3><ul>
+<li>通用模块定义规范<br>它可以通过运行编译时让同一个代码模块在使用 CommonJs、CMD 甚至是 AMD 的项目中运行。<br>这样就使得 JavaScript 包运行在浏览器端、服务区端甚至是 APP 端都只需要遵守同一个写法就行了。他的规范就是综合其他的规范，没有自己专有得规范</li>
+</ul>
+<h3 id="ES-原生模块化"><a href="#ES-原生模块化" class="headerlink" title="ES 原生模块化"></a>ES 原生模块化</h3><ul>
+<li><p>ES 模块化导出有 export和 export default两种。这里我们建议减少使用 export default导出！<br>原因很简单<br>其一 export default导出整体对象，不利于 tree shaking；<br>其二 export default导出的结果可以随意命名，不利于代码管理</p>
+<ul>
+<li><p>tree shaking<br>tree shaking 就是通过减少web项目中 JavaScript 的无用代码，以达到减少用户打开页面所需的等待时间，来增强用户体验</p>
+<ul>
+<li>Node 也从 9.0 版本开始支持 ES 模块，可见 ES 模块化由于它的开箱即用的 tree shaking 和未来浏览器兼容性支持等优点，已经渐渐成为web项目的首选</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>webpack 2以上用的es  module</p>
+</li>
+</ul>
+<h2 id="简单介绍一下-V8-引擎的垃圾回收机制"><a href="#简单介绍一下-V8-引擎的垃圾回收机制" class="headerlink" title="简单介绍一下 V8 引擎的垃圾回收机制"></a>简单介绍一下 V8 引擎的垃圾回收机制</h2><h2 id="前端性能优化"><a href="#前端性能优化" class="headerlink" title="前端性能优化"></a>前端性能优化</h2><h3 id="网络层-1"><a href="#网络层-1" class="headerlink" title="网络层"></a>网络层</h3><ul>
+<li><p>请求过程优化</p>
+<ul>
+<li><p>构建工具性能调优<br>Nginx的gzip压缩<br>图片优化</p>
+<ul>
+<li>图片用jpeg少用png<br>jpg、svg </li>
+<li>图片精灵合并图片</li>
+<li>压缩minify js和css</li>
+<li>cdn减少用户和服务器的距离</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>减少网络请求</p>
+<ul>
+<li><p>本地存储</p>
+<ul>
+<li>离线存储技术<br>serviceworker — pwa<br>浏览器缓存 indexDB<br>localstorage<br>session<br>cokie</li>
+</ul>
+</li>
+<li><p>子主题 2</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="渲染层面"><a href="#渲染层面" class="headerlink" title="渲染层面"></a>渲染层面</h3><ul>
+<li><p>ssr服务端生成html字符串</p>
+</li>
+<li><p>dom优化</p>
+<ul>
+<li>事件循环异步更新<br>回流重绘</li>
+</ul>
+</li>
+<li><p>浏览器渲染机制</p>
+<ul>
+<li><p>css</p>
+<ul>
+<li>将动画效果应用到position属性为absolute或fixed的元素上</li>
+</ul>
+</li>
+<li><p>js</p>
+<ul>
+<li>事件节流消抖<br>懒加载</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>首屏渲染提速</p>
+</li>
+</ul>
+<h3 id="性能检测"><a href="#性能检测" class="headerlink" title="性能检测"></a>性能检测</h3><ul>
+<li>可视化工具<br>performance<br>lighthouse</li>
+<li>w3c性能api</li>
+</ul>
+<h3 id="tree-shaking-删除冗余代码"><a href="#tree-shaking-删除冗余代码" class="headerlink" title="tree-shaking 删除冗余代码"></a>tree-shaking 删除冗余代码</h3><h3 id="首屏加载性能优化"><a href="#首屏加载性能优化" class="headerlink" title="首屏加载性能优化"></a>首屏加载性能优化</h3><ul>
+<li>Vue-Router路由懒加载（利用Webpack的代码切割）</li>
+<li>使用cdn将通用库从vendor中 抽离</li>
+<li>Vue异步组件</li>
+<li>服务端渲染SSR</li>
+<li>如果使用了一些UI库，采用按需加载</li>
+<li>Webpack开启gzip压缩</li>
+<li>使用link标签的rel属性设置   prefetch</li>
+</ul>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><ul>
+<li>函数的生命周期：</li>
+</ul>
+<pre><code>- 创建：JS解析引擎进行预解析，会将函数声明提前，同时将该函数放到全局作用域中或当前函数的上一级函数的局部作用域中。
+- 执行：JS引擎会将当前函数的局部变量和内部函数进行声明提前，然后再执行业务代码，当函数执行完退出时，释放该函数的执行上下文，并注销该函数的局部变量。</code></pre><ul>
+<li>当代码在一个环境中创建时，会创建变量对象的一个作用域链（scope chain）来保证对执行环境有权访问的变量和函数。作用域第一个对象始终是当前执行代码所在环境的变量对象（VO）。如果是函数执行阶段，那么将其activation object（AO）作为作用域链第一个对象，第二个对象是上级函数的执行上下文AO，下一个对象依次类推</li>
+<li>当查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。这样由多个执行上下文的变量对象构成的链表就叫做作用域链。</li>
+</ul>
+<h2 id="安全性问题如何避免"><a href="#安全性问题如何避免" class="headerlink" title="安全性问题如何避免"></a>安全性问题如何避免</h2><h3 id="XSS（跨站脚本攻击）Cross-Site-Script"><a href="#XSS（跨站脚本攻击）Cross-Site-Script" class="headerlink" title="XSS（跨站脚本攻击）Cross Site Script"></a>XSS（跨站脚本攻击）Cross Site Script</h3><p>XSS 攻击是指攻击者在网站上注入恶意的客户端代码</p>
+<ul>
+<li><p>反射型（非持久型）</p>
+<ul>
+<li>反射型 XSS 只是简单地把用户输入的数据 “反射” 给浏览器，这种攻击方式往往需要攻击者诱使用户点击一个恶意链接</li>
+</ul>
+</li>
+<li><p>存储型</p>
+</li>
+</ul>
+<pre><code>- 存储型 XSS 会把用户输入的数据 &quot;存储&quot; 在服务器端，当浏览器请求数据时，脚本从服务器上传回并执行。这种 XSS 攻击具有很强的稳定性。比较常见的一个场景是攻击者在社区或论坛上写下一篇包含恶意 JavaScript 代码的文章或评论，文章或评论发表后，所有访问该文章或评论的用户，都会在他们的浏览器中执行这段恶意的 </code></pre><ul>
+<li><p>基于DOM</p>
+<ul>
+<li>通过恶意脚本修改页面的 DOM 结构，是纯粹发生在客户端的攻击：</li>
+</ul>
+</li>
+<li><p>XSS攻击防范</p>
+</li>
+</ul>
+<pre><code>- HttpOnly 防止劫取 Cookie
+- 输入检查/输出检查</code></pre><h3 id="CSRF-XSRF（跨站请求伪造）"><a href="#CSRF-XSRF（跨站请求伪造）" class="headerlink" title="CSRF/XSRF（跨站请求伪造）"></a>CSRF/XSRF（跨站请求伪造）</h3><p>Cross Site Request Forgery</p>
+<ul>
+<li><p>解决</p>
+<ul>
+<li>验证码</li>
+<li>Referer Check<br>检查请求是否来自合法的”源”</li>
+<li>添加token验证</li>
+</ul>
+</li>
+</ul>
+<p><em>XMind: ZEN - Trial Version</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/02/webpack%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -466,8 +1120,23 @@
 <td align="center">内容</td>
 <td align="right"></td>
 </tr>
+<tr>
+<td>最开始变量都在新生代内存中，等经历了第二次内存回收后，变量还未被销毁的会被放到老生代内存里。所以老生代需要的空间更大</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>老生代会经历磁盘整理，使地址空间能连续，用时间换空间</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
 </tbody></table>
 <p>###内存查看<br>·浏览器 window.performance<br>·Node—process.memoryUsage()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    rss:&#x2F;&#x2F;可申请的</span><br><span class="line">    heapTotal:&#x2F;&#x2F;总内存</span><br><span class="line">    heapUsed:&#x2F;&#x2F;已经是用的内存</span><br><span class="line">    external:   &#x2F;&#x2F;nonde特性 c++特有的预留的内存</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>###内存浪费的几个情况<br>1.全局变量及时回收，及时改为undefined<br>2.缓存不设限，缓存上锁</p>
 <p>断点续传转成base64 一段一段的传，然后后台再拼接</p>
 <p>node 当代前端必备技能<br>node 一般打辅助 webpack node  vue-cli-Service</p>
@@ -478,6 +1147,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">window.onload&#x3D;function()&#123;</span><br><span class="line">var tcptime&#x3D;window.performance.connectEnd-window.performace.connectStar</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>编程技巧就看源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fuction deepCopy(target,source)&#123;</span><br><span class="line">source.forEach((item,key)&#x3D;&gt;&#123;</span><br><span class="line">    let targetChild&#x3D;item</span><br><span class="line">    if(targetChild instanceOf Array)&#123;</span><br><span class="line">        target[key]&#x3D;[]</span><br><span class="line">        deepCopy(target[key],targetChild)</span><br><span class="line">      &#125;else if(targetChild instanceOf Object)&#123;</span><br><span class="line">         target[key]&#x3D;&#123;&#125;</span><br><span class="line">         deepCopy(target[key],targetChild)</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">         target[key]&#x3D;targetChild</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">var a&#x3D;&#123;name:&#39;小小&#39;;age:12;family:&#123;</span><br><span class="line">    father:&#39;大大&#39;,</span><br><span class="line">    mather:&#39;aiai&#39;</span><br><span class="line">&#125;&#125;</span><br><span class="line">var b&#x3D;&#123;&#125;</span><br><span class="line">deepCopy(b,a)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 
           
         
@@ -545,7 +1222,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/" itemprop="url">vue面试题记录</a></h1>
+                <a class="post-title-link" href="/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/" itemprop="url">vue</a></h1>
         
 
         <div class="post-meta">
@@ -597,7 +1274,7 @@
       
         
           
-            <h1 id="vue面试题"><a href="#vue面试题" class="headerlink" title="vue面试题"></a>vue面试题</h1><p>##vue响应式原理的实现<br>·数据的双向绑定<br>·diff算法virtual Dom</p>
+            <h1 id="vue篇"><a href="#vue篇" class="headerlink" title="vue篇"></a>vue篇</h1><p>##vue响应式原理的实现<br>·数据的双向绑定<br>·diff算法virtual Dom</p>
 <p>###defineProperty定义对象的属性<br>核心不是是用来做为数据双向绑定，而是去做对象属性标签，只是属性里面的get/set实现了响应式</p>
 <table>
 <thead>
@@ -631,11 +1308,20 @@
 <td align="right">false</td>
 </tr>
 </tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var ob&#x3D;&#123;</span><br><span class="line">a:1,</span><br><span class="line">b:2</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(ob,&#39;a&#39;&#123;</span><br><span class="line">writable:false,&#x2F;&#x2F;不可修改</span><br><span class="line">enumerable:false,&#x2F;&#x2F;无法遍历</span><br><span class="line">configurable：false,&#x2F;&#x2F;不可以被删除</span><br><span class="line">get:function()&#123;</span><br><span class="line">return  &#x2F;&#x2F;要有返回值</span><br><span class="line">&#125;,</span><br><span class="line">set:function()&#123;</span><br><span class="line">_value&#x3D;newValue;</span><br><span class="line">return _value</span><br><span class="line">&#125;,</span><br><span class="line">&#125;)</span><br><span class="line">console.log(Object.getOwnPropertyDescriptor(ob,&#39;a&#39;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var ob&#x3D;&#123;</span><br><span class="line">a:1,</span><br><span class="line">b:2</span><br><span class="line">&#125; &#x2F;&#x2F;相比于vue3 不好看</span><br><span class="line">Object.defineProperty(ob,&#39;a&#39;&#123;</span><br><span class="line">writable:false,&#x2F;&#x2F;不可修改</span><br><span class="line">enumerable:false,&#x2F;&#x2F;无法遍历</span><br><span class="line">configurable：false,&#x2F;&#x2F;不可以被删除</span><br><span class="line">get:function()&#123;</span><br><span class="line">return  &#x2F;&#x2F;要有返回值</span><br><span class="line">&#125;,</span><br><span class="line">set:function()&#123;</span><br><span class="line">_value&#x3D;newValue;</span><br><span class="line">return _value</span><br><span class="line">&#125;,</span><br><span class="line">&#125;)</span><br><span class="line">console.log(Object.getOwnPropertyDescriptor(ob,&#39;a&#39;))</span><br></pre></td></tr></table></figure>
+
+<p>###defineProperty 缺点<br>1.深层嵌套的对象需要不停的递归循环，浪费资源 vue3-proxy 直接代理整个对象不用去递归了<br>2.defineProperty对于一个数据对象某个属性的一个权限标签的定义，如果是数组的话就无法进行监听，所以只能根据数组的push和pop等方法才能进行数据的相应<br>3.defineProperty要改变原对象，破坏js偏好的稳定对象。而Vue3-proxy不改变原对象而是对原对象进行代理返回新对象。<br>###vue3 具有更高效的比对算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;span&gt;&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;mes&#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">exprot function render()&#123;</span><br><span class="line">    return (_openBlock(),_createBlock(&#39;div&#39;,null,[</span><br><span class="line">    _createVNode(&#39;span&#39;,null,&#39;static&#39;),</span><br><span class="line">    _createVNode(&#39;span&#39;,null,_toDisplayString(_cx.mes),1),</span><br><span class="line">    ]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##vue3 函数式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vue2的实现</span><br><span class="line">(function(global,factory)&#123;</span><br><span class="line">    typeof exports&#x3D;&#x3D;&#x3D;&#39;object&#39; &amp;&amp; module !&#x3D;&#x3D;&#39;undefined&#39;?module.exports&#x3D;factory():typeof define&#x3D;&#39;function&#39; @@@define.amd?define(factory):global.vue &#x3D;factory();</span><br><span class="line">&#125;)&#123;this,fuction()&#123;</span><br><span class="line">    function vue()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    return vue</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;mounted watcher 函数式方式 和react hook很像了</span><br><span class="line"></span><br><span class="line">var vue &#x3D;(function()&#123;</span><br><span class="line">    function onMounted()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    function watch()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    exports.onMounted&#x3D;onMounted;</span><br><span class="line">    exports.watch &#x3D; watch</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 
 
-
-<p>##<br>组件：对某功能或某模块的封装（alter，loading）<br>插件：对一系列组件的封装（vuex，vue-router）</p>
+<p>vue2 是一层一层遍历每一个标签，造成一个由dom数量来决定的编译<br>vue3 由他的动态节点数量来决定<br>tree-shaking 可以将不用的比如900个方法全部删了<br>tree-shaking 如果挂载在对象上的话无法对对象属性进行改变，而是基于exports的 文档流的。</p>
+<p>###将vue 2项目改为vue3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先cd到创建的项目中</span><br><span class="line">$ vue add  vue&#x2F;@next</span><br></pre></td></tr></table></figure>
+<p>vue 3移除了<code>create</code> 和<code>beforeCreate</code>方法 合并成了 <code>setup（）{}</code>方法</p>
+<p>组件：对某功能或某模块的封装（alter，loading）<br>插件：对一系列组件的封装（vuex，vue-router）</p>
 <h2 id="v-if-和-v-for-哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？"><a href="#v-if-和-v-for-哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？" class="headerlink" title="v-if 和 v-for 哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？"></a>v-if 和 v-for 哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？</h2><p>源码中找答案 compiler/index.js</p>
 
           
@@ -3624,7 +4310,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

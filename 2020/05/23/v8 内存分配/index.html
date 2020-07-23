@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="v8的内存分配64位系统新生代内存空间：64M牺牲空间换时间               标志了删除会内存空间不连续，导致磁盘碎片。导致数组放不了    新生代内存空间 新生代内存空间 老生代内存空间 老生代内存空间 老生代内存空间    semiapace semimspace 内容 内容    from to 内容 内容    ###内存查看·浏览器 window.performance·No">
+<meta name="description" content="v8的内存分配64位系统新生代内存空间：64M牺牲空间换时间               标志了删除会内存空间不连续，导致磁盘碎片。导致数组放不了    新生代内存空间 新生代内存空间 老生代内存空间 老生代内存空间 老生代内存空间    semiapace semimspace 内容 内容    from to 内容 内容    最开始变量都在新生代内存中，等经历了第二次内存回收后，变量还未被销">
 <meta property="og:type" content="article">
 <meta property="og:title" content="v8 内存分配">
 <meta property="og:url" content="http://yoursite.com/2020/05/23/v8%20%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.html">
 <meta property="og:site_name" content="hhxEmily521">
-<meta property="og:description" content="v8的内存分配64位系统新生代内存空间：64M牺牲空间换时间               标志了删除会内存空间不连续，导致磁盘碎片。导致数组放不了    新生代内存空间 新生代内存空间 老生代内存空间 老生代内存空间 老生代内存空间    semiapace semimspace 内容 内容    from to 内容 内容    ###内存查看·浏览器 window.performance·No">
+<meta property="og:description" content="v8的内存分配64位系统新生代内存空间：64M牺牲空间换时间               标志了删除会内存空间不连续，导致磁盘碎片。导致数组放不了    新生代内存空间 新生代内存空间 老生代内存空间 老生代内存空间 老生代内存空间    semiapace semimspace 内容 内容    from to 内容 内容    最开始变量都在新生代内存中，等经历了第二次内存回收后，变量还未被销">
 <meta property="article:published_time" content="2020-05-23T08:34:44.334Z">
-<meta property="article:modified_time" content="2020-06-09T15:11:22.624Z">
+<meta property="article:modified_time" content="2020-07-19T12:28:37.849Z">
 <meta property="article:author" content="Huanghongxia">
 <meta name="twitter:card" content="summary">
 
@@ -323,8 +323,23 @@
 <td align="center">内容</td>
 <td align="right"></td>
 </tr>
+<tr>
+<td>最开始变量都在新生代内存中，等经历了第二次内存回收后，变量还未被销毁的会被放到老生代内存里。所以老生代需要的空间更大</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>老生代会经历磁盘整理，使地址空间能连续，用时间换空间</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
 </tbody></table>
 <p>###内存查看<br>·浏览器 window.performance<br>·Node—process.memoryUsage()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    rss:&#x2F;&#x2F;可申请的</span><br><span class="line">    heapTotal:&#x2F;&#x2F;总内存</span><br><span class="line">    heapUsed:&#x2F;&#x2F;已经是用的内存</span><br><span class="line">    external:   &#x2F;&#x2F;nonde特性 c++特有的预留的内存</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>###内存浪费的几个情况<br>1.全局变量及时回收，及时改为undefined<br>2.缓存不设限，缓存上锁</p>
 <p>断点续传转成base64 一段一段的传，然后后台再拼接</p>
 <p>node 当代前端必备技能<br>node 一般打辅助 webpack node  vue-cli-Service</p>
@@ -335,6 +350,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">window.onload&#x3D;function()&#123;</span><br><span class="line">var tcptime&#x3D;window.performance.connectEnd-window.performace.connectStar</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>编程技巧就看源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fuction deepCopy(target,source)&#123;</span><br><span class="line">source.forEach((item,key)&#x3D;&gt;&#123;</span><br><span class="line">    let targetChild&#x3D;item</span><br><span class="line">    if(targetChild instanceOf Array)&#123;</span><br><span class="line">        target[key]&#x3D;[]</span><br><span class="line">        deepCopy(target[key],targetChild)</span><br><span class="line">      &#125;else if(targetChild instanceOf Object)&#123;</span><br><span class="line">         target[key]&#x3D;&#123;&#125;</span><br><span class="line">         deepCopy(target[key],targetChild)</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">         target[key]&#x3D;targetChild</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">var a&#x3D;&#123;name:&#39;小小&#39;;age:12;family:&#123;</span><br><span class="line">    father:&#39;大大&#39;,</span><br><span class="line">    mather:&#39;aiai&#39;</span><br><span class="line">&#125;&#125;</span><br><span class="line">var b&#x3D;&#123;&#125;</span><br><span class="line">deepCopy(b,a)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 
       
     </div>
@@ -359,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/" rel="next" title="vue面试题记录">
-                <i class="fa fa-chevron-left"></i> vue面试题记录
+              <a href="/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/" rel="next" title="vue">
+                <i class="fa fa-chevron-left"></i> vue
               </a>
             
           </div>
@@ -448,7 +471,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
