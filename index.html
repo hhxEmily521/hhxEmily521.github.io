@@ -228,6 +228,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/17/vue3.0+typscript%E5%AE%9E%E6%88%98/vue3.0+typScript(%E7%AF%87%E7%AB%A0%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Huanghongxia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hhxEmily521">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/17/vue3.0+typscript%E5%AE%9E%E6%88%98/vue3.0+typScript(%E7%AF%87%E7%AB%A0%E4%B8%80)/" itemprop="url">vue3.0+typscript实战/vue3.0+typScript(篇章一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-17T18:20:55+08:00">
+                2020-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vue3-0-TypScript-篇章一"><a href="#vue3-0-TypScript-篇章一" class="headerlink" title="vue3.0+TypScript (篇章一)"></a>vue3.0+TypScript (篇章一)</h1><h2 id="先做准备工作吧"><a href="#先做准备工作吧" class="headerlink" title="先做准备工作吧"></a>先做准备工作吧</h2><h3 id="大致了解vue2-0和vue3-0的对比"><a href="#大致了解vue2-0和vue3-0的对比" class="headerlink" title="大致了解vue2.0和vue3.0的对比"></a>大致了解vue2.0和vue3.0的对比</h3><ul>
+<li>vue 2.0 采用的是flow进行编写，而3.0源码全部采用typescript开发的 对typescript 有更好的支持</li>
+<li>源码题体积优化移除了部分api，例如filter。使用函数式api更好的tree-shaking</li>
+<li>CompositionAPI：整个业务代码的逻辑，提取公共逻辑（vue2采用的mixin-容易有命名冲突）</li>
+<li>数据劫持的优化：vue3.0采用的是proxy 代理的方式管理数据，不用再通过defineProperty层层递归增加拦截器，（所以vue2我们尽量让数据扁平化）。</li>
+<li>编译优化vue3实现了静态模板分析，重写了diff算法，静态节点不参与比对</li>
+<li>自定义渲染器：可以用来创建自定义的渲染器，改写vue底层渲染逻辑，可以自定义定制例如 webGl、小程序、canvas等渲染元素</li>
+<li>新增Fragment、Teleport、Suspense组件</li>
+</ul>
+<h3 id="简单了解ts常用的几个基本用法"><a href="#简单了解ts常用的几个基本用法" class="headerlink" title="简单了解ts常用的几个基本用法"></a>简单了解ts常用的几个基本用法</h3><ul>
+<li>基本数据类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;1、基础数据类型</span><br><span class="line">&#x2F;&#x2F; ts 中冒号后面的都是类型</span><br><span class="line">const str: string &#x3D; &#39;hello hhx&#39;</span><br><span class="line">const num: number &#x3D; 12;</span><br><span class="line">const boolean: boolean &#x3D; true;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;2.联合类型 </span><br><span class="line">let age: string | number &#x3D; 1;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;数组</span><br><span class="line">const arr: number[] &#x3D; [1, 2, 3, 4, 5];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 元祖</span><br><span class="line">const tuple: [string, number] &#x3D; [&#39;hhx&#39;, 1];</span><br><span class="line">console.log(&quot;tuple&quot;, tuple)</span><br><span class="line"></span><br><span class="line">let a: null &#x3D; null;</span><br><span class="line">let b: undefined &#x3D; undefined;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;枚举</span><br><span class="line">enum USER_ROLE &#123;</span><br><span class="line">    USER &#x3D; &#39;user&#39;,</span><br><span class="line">    MANAGER &#x3D; &#39;manager&#39;,</span><br><span class="line">    ADMIN &#x3D; &#39;admin&#39;</span><br><span class="line">&#125;</span><br><span class="line">console.log(&quot;USER_ROLE&quot;, USER_ROLE.MANAGER)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;any </span><br><span class="line">const array: any &#x3D; [&#123;&#125;, &#39;a&#39;, 123] &#x2F;&#x2F;相当于 const array &#x3D; [&#123;&#125;,&#39;a&#39;,123] 失去了ts的校验</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接口interface</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;接口 用来描述对象的形状</span><br><span class="line">interface ISchool &#123;</span><br><span class="line">    name: string,</span><br><span class="line">    age: number,</span><br><span class="line">    address: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let school: ISchool &#x3D; &#123;</span><br><span class="line">    name: &#39;Tsinghua&#39;,</span><br><span class="line">    age: 109,</span><br><span class="line">    address: &#39;beijing&#39;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;接口可以拓展</span><br><span class="line">interface ITsinghua extends ISchool &#123;</span><br><span class="line">    type: string[],</span><br><span class="line">    [key: string]: any &#x2F;&#x2F;类型随意</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">const tsinghua:ITsinghua &#x3D; &#123;</span><br><span class="line">    ...school,</span><br><span class="line">    type: [&#39;985&#39;, &#39;211&#39;],</span><br><span class="line">    a: 1,</span><br><span class="line">    b: 2,</span><br><span class="line">&#125;</span><br><span class="line">console.log(tsinghua)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>object 类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;object 类型 非原始数据类型</span><br><span class="line">&#x2F;&#x2F; object.create(arr);</span><br><span class="line">const create &#x3D; (obj: object) &#x3D;&gt; &#123; &#125;</span><br><span class="line">create(&#123;&#125;);</span><br><span class="line">create([]);</span><br><span class="line">create(function () &#123; &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 函数主要关注返回值和参数</span><br><span class="line">function sunm1(a: string, b: string): string &#123;</span><br><span class="line">    return a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sunm2(a: number, b: number): number &#123;</span><br><span class="line">    return a + b</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">sunm1(&#39;a&#39;, &#39;b&#39;)</span><br><span class="line">sunm2(1, 2)</span><br><span class="line">&#x2F;&#x2F;可以通过表达式来定义</span><br><span class="line">const sum2: (aaa: number, bbb: number) &#x3D;&gt; number &#x3D; (a: number, b: number): number &#x3D;&gt; a + b</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;也可以用type 来定义类型 声明一个类型</span><br><span class="line">type SumSF &#x3D; ((aa: number, bb: number) &#x3D;&gt; number) | string  &#x2F;&#x2F;表示要么是函数要么可以是字符串</span><br><span class="line">let sum3: SumSF &#x3D; (a: number, b: number): number &#x3D;&gt; a + b</span><br><span class="line">sum3 &#x3D; &#39;hello&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;也可以用接口</span><br><span class="line">interface Sum &#123;</span><br><span class="line">    (a: number, b: number): number</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">const Sum4: Sum &#x3D; (a: number, b: number): number &#x3D;&gt; a + b</span><br><span class="line">&#x2F;&#x2F;区别 interface可以继承 可以被类来实现</span><br><span class="line">&#x2F;&#x2F;type 仅仅是一个别名 在联合类型的时候只能用type,以及临时变量的时候好用</span><br><span class="line"></span><br><span class="line">const sum5: Sum &#x3D; (a: number, b: number): number &#x3D;&gt; a + b</span><br></pre></td></tr></table></figure>
+
+<h3 id="把-vue-cli更新到最新版本，我现在的是-vue-cli-4-5-7"><a href="#把-vue-cli更新到最新版本，我现在的是-vue-cli-4-5-7" class="headerlink" title="把@vue-cli更新到最新版本，我现在的是@vue/cli@4.5.7"></a>把@vue-cli更新到最新版本，我现在的是@vue/cli@4.5.7</h3><p>-</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue&#x2F;cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装Typescript"><a href="#安装Typescript" class="headerlink" title="安装Typescript"></a>安装Typescript</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install typescript   ts-node  -g &#x2F;&#x2F;ts-node方便在vscode 中结合code runner插件直接运行ts代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="那我们开始吧"><a href="#那我们开始吧" class="headerlink" title="那我们开始吧"></a>那我们开始吧</h2><h3 id="第一步我们先创建一个vue-cli项目"><a href="#第一步我们先创建一个vue-cli项目" class="headerlink" title="第一步我们先创建一个vue-cli项目"></a>第一步我们先创建一个vue-cli项目</h3><ul>
+<li><pre><code>vue create practice-vue3-ts
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 项目的配置选择</span><br></pre></td></tr></table></figure>
+please pick a preset    
+❯ Manually select features
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">? Check the features needed for your project:</span><br><span class="line"> ◉ Choose Vue version</span><br><span class="line"> ◉ Babel</span><br><span class="line"> ◉ TypeScript</span><br><span class="line"> ◯ Progressive Web App (PWA) Support</span><br><span class="line"> ◉ Router</span><br><span class="line"> ◉ Vuex</span><br><span class="line"> ◉ CSS Pre-processors</span><br><span class="line">❯◯ Linter &#x2F; Formatter</span><br><span class="line"> ◯ Unit Testing</span><br><span class="line"> ◯ E2E Testing</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">? Choose a version of Vue.js that you want to start the project with</span><br><span class="line">  2.x</span><br><span class="line">❯ 3.x (Preview)</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use class-style component syntax? (y&#x2F;N) n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transp</span><br><span class="line">iling JSX)? (Y&#x2F;n) n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Use history mode for router? (Requires proper server setup for index fallback in producti</span><br><span class="line">on) (Y&#x2F;n) y</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">? Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported by default)</span><br><span class="line">: (Use arrow keys)</span><br><span class="line">❯ Sass&#x2F;SCSS (with dart-sass)</span><br><span class="line">  Sass&#x2F;SCSS (with node-sass)</span><br><span class="line">  Less</span><br><span class="line">  Stylus</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">? Where do you prefer placing config for Babel, ESLint, etc.? (Use arrow keys)</span><br><span class="line">❯ In dedicated config files</span><br><span class="line">  In package.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? Save this as a preset for future projects? (y&#x2F;N) n</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>项目启动</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd practice-vue3-ts</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/26/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1667,814 +1842,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/crodova%20APP%E7%AF%87%E7%9B%AE%E4%B8%80/index/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Huanghongxia">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hhxEmily521">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/04/crodova%20APP%E7%AF%87%E7%9B%AE%E4%B8%80/index/" itemprop="url">crodova APP篇目一/index</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T00:54:18+08:00">
-                2018-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="hhxEmily" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
-<meta property="og:type" content="article">
-<meta property="og:title" content="hhxEmily">
-<meta property="og:url" content="http://yoursite.com/2018/01/03/crodova APP篇目一/index.html">
-<meta property="og:site_name" content="hhxEmily">
-<meta property="og:description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
-<meta property="og:updated_time" content="2018-01-04T08:43:42.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hhxEmily">
-<meta name="twitter:description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/01/03/crodova APP篇目一/"/>
-
-
-
-
-
-  <title> | hhxEmily</title>
-  
-
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">hhxEmily</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/03/crodova APP篇目一/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hhx">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hhxEmily">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline"></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-03T09:56:19+08:00">
-                2018-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="crodova-APP篇目一"><a href="#crodova-APP篇目一" class="headerlink" title="crodova APP篇目一"></a>crodova APP篇目一</h1><h2 id="项目环境搭建"><a href="#项目环境搭建" class="headerlink" title="项目环境搭建"></a>项目环境搭建</h2><ol>
-<li>安装<a href="https://nodejs.org/en/download/" target="_blank" rel="external">node.js</a>环境</li>
-<li>用npm下载模块工具包:</li>
-</ol>
-<ul>
-<li>在OS X和Linux上：<figure class="highlight plain"><figcaption><span>sudo npm install -g cordova```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">*    在Windows上:</div><div class="line">```C:\&gt;npm install -g cordova</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><code>-g</code>标志是告诉 <code>npm</code> 我们全局安装 <code>cordova</code>。否则我们将会安装在当前工作目录的 <code>node_modules</code>子目录。</p>
-<p>安装完成后，你应该能够在命令行中运行cordova命令，在没有任何参数的时候会打印一些帮助信息。</p>
-<h2 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h2><ol>
-<li>命令行cd到你维护源代码的目录中，并创建你的cordova项目：<code>$ cordova create hello com.example.hello HelloWorld</code></li>
-<li>这将会为你的<code>cordova</code>应用创造必须的目录。默认情况下，<code>cordova create</code>命令生成基于web的应用程序的骨骼，项目的主页是 www/index.html 文件。<h2 id="添加一个平台"><a href="#添加一个平台" class="headerlink" title="添加一个平台"></a>添加一个平台</h2></li>
-<li>在创建完一个Cordova项目后，导航到项目目录。在项目目录中，你需要添加你想构建app的平台</li>
-</ol>
-<h2 id="添加平台"><a href="#添加平台" class="headerlink" title="添加平台"></a>添加平台</h2><p>为了添加平台， 键入 <code>cordova platform add &lt;platform name&gt;</code>。</p>
-<p>为了知道你可以添加的平台，你可以运行<code>cordova platform</code>。</p>
-<h2 id="运行App"><a href="#运行App" class="headerlink" title="运行App"></a>运行App</h2><p>在命令中,键入<code>cordova run &lt;platform name&gt;</code>。</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/11/07/index页面-2/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">hhx</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">6</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          <div class="links-of-author motion-element">
-            
-          </div>
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crodova-APP篇目一"><span class="nav-number">1.</span> <span class="nav-text">crodova APP篇目一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目环境搭建"><span class="nav-number">1.1.</span> <span class="nav-text">项目环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建app"><span class="nav-number">1.2.</span> <span class="nav-text">创建app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加一个平台"><span class="nav-number">1.3.</span> <span class="nav-text">添加一个平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加平台"><span class="nav-number">1.4.</span> <span class="nav-text">添加平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行App"><span class="nav-number">1.5.</span> <span class="nav-text">运行App</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">hhx</span>
-
-  
-</div>
-
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/15088096619037/index/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3077,6 +2444,814 @@
 
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装前序"><span class="nav-number">1.</span> <span class="nav-text">安装前序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装hexo"><span class="nav-number">2.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联GitHub建立站点"><span class="nav-number">3.</span> <span class="nav-text">关联GitHub建立站点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Deployment"><span class="nav-number">4.</span> <span class="nav-text">配置Deployment</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hhx</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/crodova%20APP%E7%AF%87%E7%9B%AE%E4%B8%80/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Huanghongxia">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hhxEmily521">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/04/crodova%20APP%E7%AF%87%E7%9B%AE%E4%B8%80/index/" itemprop="url">crodova APP篇目一/index</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T00:54:18+08:00">
+                2018-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="hhxEmily" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hhxEmily">
+<meta property="og:url" content="http://yoursite.com/2018/01/03/crodova APP篇目一/index.html">
+<meta property="og:site_name" content="hhxEmily">
+<meta property="og:description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
+<meta property="og:updated_time" content="2018-01-04T08:43:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hhxEmily">
+<meta name="twitter:description" content="crodova APP篇目一项目环境搭建 安装node.js环境 用npm下载模块工具包:   在OS X和Linux上：sudo npm install -g cordova```123   *    在Windows上:```C:\&amp;gt;npm install -g cordova   -g标志是告诉 npm 我们全局安装 cordova。否则我们将会安装在当前工作目录的 node_modu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/03/crodova APP篇目一/"/>
+
+
+
+
+
+  <title> | hhxEmily</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hhxEmily</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/03/crodova APP篇目一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hhx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hhxEmily">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-03T09:56:19+08:00">
+                2018-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="crodova-APP篇目一"><a href="#crodova-APP篇目一" class="headerlink" title="crodova APP篇目一"></a>crodova APP篇目一</h1><h2 id="项目环境搭建"><a href="#项目环境搭建" class="headerlink" title="项目环境搭建"></a>项目环境搭建</h2><ol>
+<li>安装<a href="https://nodejs.org/en/download/" target="_blank" rel="external">node.js</a>环境</li>
+<li>用npm下载模块工具包:</li>
+</ol>
+<ul>
+<li>在OS X和Linux上：<figure class="highlight plain"><figcaption><span>sudo npm install -g cordova```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">*    在Windows上:</div><div class="line">```C:\&gt;npm install -g cordova</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>-g</code>标志是告诉 <code>npm</code> 我们全局安装 <code>cordova</code>。否则我们将会安装在当前工作目录的 <code>node_modules</code>子目录。</p>
+<p>安装完成后，你应该能够在命令行中运行cordova命令，在没有任何参数的时候会打印一些帮助信息。</p>
+<h2 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h2><ol>
+<li>命令行cd到你维护源代码的目录中，并创建你的cordova项目：<code>$ cordova create hello com.example.hello HelloWorld</code></li>
+<li>这将会为你的<code>cordova</code>应用创造必须的目录。默认情况下，<code>cordova create</code>命令生成基于web的应用程序的骨骼，项目的主页是 www/index.html 文件。<h2 id="添加一个平台"><a href="#添加一个平台" class="headerlink" title="添加一个平台"></a>添加一个平台</h2></li>
+<li>在创建完一个Cordova项目后，导航到项目目录。在项目目录中，你需要添加你想构建app的平台</li>
+</ol>
+<h2 id="添加平台"><a href="#添加平台" class="headerlink" title="添加平台"></a>添加平台</h2><p>为了添加平台， 键入 <code>cordova platform add &lt;platform name&gt;</code>。</p>
+<p>为了知道你可以添加的平台，你可以运行<code>cordova platform</code>。</p>
+<h2 id="运行App"><a href="#运行App" class="headerlink" title="运行App"></a>运行App</h2><p>在命令中,键入<code>cordova run &lt;platform name&gt;</code>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/07/index页面-2/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hhx</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crodova-APP篇目一"><span class="nav-number">1.</span> <span class="nav-text">crodova APP篇目一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目环境搭建"><span class="nav-number">1.1.</span> <span class="nav-text">项目环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建app"><span class="nav-number">1.2.</span> <span class="nav-text">创建app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加一个平台"><span class="nav-number">1.3.</span> <span class="nav-text">添加一个平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加平台"><span class="nav-number">1.4.</span> <span class="nav-text">添加平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行App"><span class="nav-number">1.5.</span> <span class="nav-text">运行App</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -4136,180 +4311,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Huanghongxia">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hhxEmily521">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/" itemprop="url">前端开发学习路线图</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T18:19:32+08:00">
-                2017-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<h1 id="一、知彼"><a href="#一、知彼" class="headerlink" title="一、知彼"></a>一、知彼</h1><ul>
-<li>要有一个清晰学习路线图，先得对前端有大致的了解所以先借鉴了一下国外一大佬分享的学习路线图。<br><img src="http://ovsouy67p.bkt.clouddn.com/gitFron-end.png" alt="gitFron-end"></li>
-</ul>
-<h1 id="二、知己"><a href="#二、知己" class="headerlink" title="二、知己"></a>二、知己</h1><ul>
-<li><p>了解了前端的大致流派，那么接下来就是对自己前端方面的了解，初步评估自己还处于gettingDeeper的徘徊路口。</p>
-</li>
-<li><p>先说一下自己以后想要形成的项目开发风格：webpack+vue+sass</p>
-</li>
-<li><p>我总结了现目前自己需要恶补几个问题：<br>  1.代码规范<br>  2.css模块化开发，js组件化开发<br>  3.web响应式开发如何做好自适应。<br>  4.浏览器低版本兼容问题。<br>  5.如何做好手机端webApp适配。<br>  6.项目部署。<br>  7.等等。。。</p>
-<h1 id="三、战略"><a href="#三、战略" class="headerlink" title="三、战略"></a>三、战略</h1></li>
-<li><p>结合这么些年的失败经验来说，学习东西没有那种方法是比实践来得更快的。编程就是做项目！但是做也要分怎么做才算是高效的做。</p>
-</li>
-</ul>
-<ol>
-<li>时间管理：每天任务用时间四象大致限划分，再着手去做。参考GTD时间管理理念。</li>
-<li>对于基础薄弱的我来说，在遇到问题的时候尽量多问，就是驱动式学习，先自己思考–&gt;google–&gt;问同行技术大牛的,再不行读源码！再不行，先放着，做点儿其他的，说不定就有思路了。</li>
-<li>找环境。一定要在一个奋发向上的环境下学习工作，如果有能力和nb的同事共事那是最好不过的了。</li>
-<li>多敲代码！！！</li>
-</ol>
-<h1 id="四、短期计划"><a href="#四、短期计划" class="headerlink" title="四、短期计划"></a>四、短期计划</h1><ul>
-<li>1.今天笔试的没答上来的题去了解了解，写个笔记。</li>
-<li>2.在GitHub上fork一个vue.js+webpack的项目，调试研读别人的代码，借鉴人家好的编程习惯和逻辑。</li>
-<li>3.用vue.js+webpack把现在接的项目完成。</li>
-<li>4.了解如何完成一个vue.js+webpack的完整项目开发，比较困惑的是写好的项目如何部署到服务器，直到输入网址可以直接访问。</li>
-<li>5.有时间多多看一些逻辑比较复杂的js实现代码。</li>
-<li>6.在项目中将自己前说的遗留的问题解决掉。</li>
-</ul>
-<h1 id="五、来日方长"><a href="#五、来日方长" class="headerlink" title="五、来日方长"></a>五、来日方长</h1><p>等到上面的计划都完成了（当然其中也会随之出现很多没有考虑到的问题），我感觉我基本也能真正意义上的独立开发一个前端项目了。<br>我以后会做的就会有：<br>1.vue.js+webpack+node.js+mongoDB<br>2.vue.js源码阅读。<br>3.英语的提升（平日多用Google看英文文献）<br>4.优化代码，提炼代码，使项目开发框架化开发。<br>5.管理能力。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>‘去做’ 才是硬道理。希望一年后看到一个nb的自己。加油~</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+  </nav>
+
 
 
           </div>
@@ -4353,7 +4361,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
