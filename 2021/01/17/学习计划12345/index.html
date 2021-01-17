@@ -79,16 +79,24 @@
 
 
 
-<meta name="description" content="vue篇##vue响应式原理的实现·数据的双向绑定·diff算法virtual Dom ###defineProperty定义对象的属性核心不是是用来做为数据双向绑定，而是去做对象属性标签，只是属性里面的get&#x2F;set实现了响应式    属性名 默认值    value undefined   get undefined   set undefined   vritable false   enu">
+<meta name="description" content="学习计划学习重点插入「脑图」并进行编辑 学习资源课堂PPT嵌入「本地文件」，在文档中可预览此文件：  脑图（XMind、Mind Manager、Mind Node）设计文件（PhotoShop、Sketch、Axure)办公文件（PDF、PPT、Word、Excel、Keynote、Pages、Numbers）  教学视频嵌入「本地视频」或「在线视频」，如优酷及Bilibili视频：    阅读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue">
-<meta property="og:url" content="http://yoursite.com/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="学习计划12345">
+<meta property="og:url" content="http://yoursite.com/2021/01/17/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%9212345/index.html">
 <meta property="og:site_name" content="hhxEmily521">
-<meta property="og:description" content="vue篇##vue响应式原理的实现·数据的双向绑定·diff算法virtual Dom ###defineProperty定义对象的属性核心不是是用来做为数据双向绑定，而是去做对象属性标签，只是属性里面的get&#x2F;set实现了响应式    属性名 默认值    value undefined   get undefined   set undefined   vritable false   enu">
-<meta property="article:published_time" content="2020-05-22T13:37:12.000Z">
-<meta property="article:modified_time" content="2020-06-21T11:47:18.282Z">
+<meta property="og:description" content="学习计划学习重点插入「脑图」并进行编辑 学习资源课堂PPT嵌入「本地文件」，在文档中可预览此文件：  脑图（XMind、Mind Manager、Mind Node）设计文件（PhotoShop、Sketch、Axure)办公文件（PDF、PPT、Word、Excel、Keynote、Pages、Numbers）  教学视频嵌入「本地视频」或「在线视频」，如优酷及Bilibili视频：    阅读">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/jpeg/12467772/1610854690324-6506bd4f-711d-4cc8-97d0-080981c42189.jpeg">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/105911/1571983625842-9d347225-731e-41e0-ab51-91a232a2db72.jpeg#align=left&display=inline&height=3264&name=alex-knight-2EJCSULRwC8-unsplash.jpg&originHeight=3264&originWidth=4896&size=1555309&status=done&width=4896">
+<meta property="article:published_time" content="2021-01-17T03:47:54.022Z">
+<meta property="article:modified_time" content="2021-01-17T03:47:54.023Z">
 <meta property="article:author" content="Huanghongxia">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25">
 
 
 
@@ -118,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/22/vue源码笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2021/01/17/学习计划12345/"/>
 
 
 
 
 
-  <title>vue | hhxEmily521</title>
+  <title>学习计划12345 | hhxEmily521</title>
   
 
 
@@ -231,7 +239,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/17/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%9212345/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Huanghongxia">
@@ -248,7 +256,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue</h1>
+          <h1 class="post-title" itemprop="name headline">学习计划12345</h1>
         
 
         <div class="post-meta">
@@ -260,8 +268,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T21:37:12+08:00">
-                2020-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-17T11:47:54+08:00">
+                2021-01-17
               </time>
             
 
@@ -298,55 +306,52 @@
       
 
       
-        <h1 id="vue篇"><a href="#vue篇" class="headerlink" title="vue篇"></a>vue篇</h1><p>##vue响应式原理的实现<br>·数据的双向绑定<br>·diff算法virtual Dom</p>
-<p>###defineProperty定义对象的属性<br>核心不是是用来做为数据双向绑定，而是去做对象属性标签，只是属性里面的get/set实现了响应式</p>
+        <h1 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h1><h3 id="学习重点"><a href="#学习重点" class="headerlink" title="学习重点"></a>学习重点</h3><p><img src="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25" alt="image.png">插入「脑图」并进行编辑<br><img src="https://cdn.nlark.com/yuque/0/2021/jpeg/12467772/1610854690324-6506bd4f-711d-4cc8-97d0-080981c42189.jpeg" alt=""></p>
+<h3 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h3><h4 id="课堂PPT"><a href="#课堂PPT" class="headerlink" title="课堂PPT"></a>课堂PPT</h4><p><img src="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25" alt="image.png">嵌入「本地文件」，在文档中可预览此文件：</p>
+<blockquote>
+<p>脑图（XMind、Mind Manager、Mind Node）<br>设计文件（PhotoShop、Sketch、Axure)<br>办公文件（PDF、PPT、Word、Excel、Keynote、Pages、Numbers）</p>
+</blockquote>
+<h4 id="教学视频"><a href="#教学视频" class="headerlink" title="教学视频"></a>教学视频</h4><p><img src="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25" alt="image.png">嵌入「本地视频」或「在线视频」，如优酷及Bilibili视频：</p>
+<iframe src="https://player.bilibili.com/player.html?aid=55895675" frameborder="no" allowfullscreen="true"></iframe>
+
+
+<h4 id="阅读材料"><a href="#阅读材料" class="headerlink" title="阅读材料"></a>阅读材料</h4><p><img src="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25" alt="image.png">插入「附件」</p>
+<p><a href="https://www.yuque.com/attachments/yuque/0/2019/pdf/105911/1570525820813-a79b3d0f-38cb-4a73-a2bb-ce8f091f2049.pdf?_lake_card=%7B%22uid%22%3A%22rc-upload-1567514495288-26%22%2C%22src%22%3A%22https%3A%2F%2Fwww.yuque.com%2Fattachments%2Fyuque%2F0%2F2019%2Fpdf%2F105911%2F1570525820813-a79b3d0f-38cb-4a73-a2bb-ce8f091f2049.pdf%22%2C%22name%22%3A%22%E7%A4%BA%E4%BE%8BPDF.pdf%22%2C%22size%22%3A16189%2C%22type%22%3A%22application%2Fpdf%22%2C%22ext%22%3A%22pdf%22%2C%22progress%22%3A%7B%22percent%22%3A0%7D%2C%22status%22%3A%22done%22%2C%22percent%22%3A0%2C%22id%22%3A%22wTSXR%22%2C%22refSrc%22%3A%22https%3A%2F%2Fwww.yuque.com%2Fattachments%2Fyuque%2F0%2F2019%2Fpdf%2F105911%2F1569247460410-d74712f0-05ce-474b-b914-d76439248860.pdf%22%2C%22card%22%3A%22file%22%7D" target="_blank" rel="noopener">示例PDF.pdf</a></p>
+<h3 id="学习计划-1"><a href="#学习计划-1" class="headerlink" title="学习计划"></a>学习计划</h3><p><img src="https://cdn.nlark.com/yuque/0/2019/png/215718/1567514692551-49e3e165-3fab-4dd7-895e-4b7e9a57ec24.png#align=left&display=inline&height=25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=25&originWidth=25&size=1539&status=done&style=none&width=25" alt="image.png">插入「表格」，可以在表格框里插入对应的图片、附件、状态</p>
 <table>
 <thead>
 <tr>
-<th>属性名</th>
-<th align="right">默认值</th>
+<th align="center"><strong>书名</strong></th>
+<th align="center"><strong>章节</strong></th>
+<th align="center"><strong>计划阅读时间</strong></th>
+<th align="center"><strong>进程</strong></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>value</td>
-<td align="right">undefined</td>
+<td align="center">《基础有机化学》</td>
+<td align="center">第三章</td>
+<td align="center">2h</td>
+<td align="center">已完成</td>
 </tr>
 <tr>
-<td>get</td>
-<td align="right">undefined</td>
+<td align="center">《无机化学》</td>
+<td align="center">第一章</td>
+<td align="center">1h</td>
+<td align="center">进行中</td>
 </tr>
 <tr>
-<td>set</td>
-<td align="right">undefined</td>
+<td align="center">《物理化学》</td>
+<td align="center">第四章</td>
+<td align="center">1h</td>
+<td align="center">未开始</td>
 </tr>
 <tr>
-<td>vritable</td>
-<td align="right">false</td>
-</tr>
-<tr>
-<td>enumerable</td>
-<td align="right">false</td>
-</tr>
-<tr>
-<td>configurable</td>
-<td align="right">false</td>
+<td align="center"><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/105911/1571983625842-9d347225-731e-41e0-ab51-91a232a2db72.jpeg#align=left&display=inline&height=3264&name=alex-knight-2EJCSULRwC8-unsplash.jpg&originHeight=3264&originWidth=4896&size=1555309&status=done&width=4896" alt="alex-knight-2EJCSULRwC8-unsplash.jpg"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
 </tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var ob&#x3D;&#123;</span><br><span class="line">a:1,</span><br><span class="line">b:2</span><br><span class="line">&#125; &#x2F;&#x2F;相比于vue3 不好看</span><br><span class="line">Object.defineProperty(ob,&#39;a&#39;&#123;</span><br><span class="line">writable:false,&#x2F;&#x2F;不可修改</span><br><span class="line">enumerable:false,&#x2F;&#x2F;无法遍历</span><br><span class="line">configurable：false,&#x2F;&#x2F;不可以被删除</span><br><span class="line">get:function()&#123;</span><br><span class="line">return  &#x2F;&#x2F;要有返回值</span><br><span class="line">&#125;,</span><br><span class="line">set:function()&#123;</span><br><span class="line">_value&#x3D;newValue;</span><br><span class="line">return _value</span><br><span class="line">&#125;,</span><br><span class="line">&#125;)</span><br><span class="line">console.log(Object.getOwnPropertyDescriptor(ob,&#39;a&#39;))</span><br></pre></td></tr></table></figure>
-
-<p>###defineProperty 缺点<br>1.深层嵌套的对象需要不停的递归循环，浪费资源 vue3-proxy 直接代理整个对象不用去递归了<br>2.defineProperty对于一个数据对象某个属性的一个权限标签的定义，如果是数组的话就无法进行监听，所以只能根据数组的push和pop等方法才能进行数据的相应<br>3.defineProperty要改变原对象，破坏js偏好的稳定对象。而Vue3-proxy不改变原对象而是对原对象进行代理返回新对象。<br>###vue3 具有更高效的比对算法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;span&gt;&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;mes&#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">exprot function render()&#123;</span><br><span class="line">    return (_openBlock(),_createBlock(&#39;div&#39;,null,[</span><br><span class="line">    _createVNode(&#39;span&#39;,null,&#39;static&#39;),</span><br><span class="line">    _createVNode(&#39;span&#39;,null,_toDisplayString(_cx.mes),1),</span><br><span class="line">    ]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>##vue3 函数式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vue2的实现</span><br><span class="line">(function(global,factory)&#123;</span><br><span class="line">    typeof exports&#x3D;&#x3D;&#x3D;&#39;object&#39; &amp;&amp; module !&#x3D;&#x3D;&#39;undefined&#39;?module.exports&#x3D;factory():typeof define&#x3D;&#39;function&#39; @@@define.amd?define(factory):global.vue &#x3D;factory();</span><br><span class="line">&#125;)&#123;this,fuction()&#123;</span><br><span class="line">    function vue()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    return vue</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;mounted watcher 函数式方式 和react hook很像了</span><br><span class="line"></span><br><span class="line">var vue &#x3D;(function()&#123;</span><br><span class="line">    function onMounted()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    function watch()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    exports.onMounted&#x3D;onMounted;</span><br><span class="line">    exports.watch &#x3D; watch</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-
-
-<p>vue2 是一层一层遍历每一个标签，造成一个由dom数量来决定的编译<br>vue3 由他的动态节点数量来决定<br>tree-shaking 可以将不用的比如900个方法全部删了<br>tree-shaking 如果挂载在对象上的话无法对对象属性进行改变，而是基于exports的 文档流的。</p>
-<p>###将vue 2项目改为vue3</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先cd到创建的项目中</span><br><span class="line">$ vue add  vue&#x2F;@next</span><br></pre></td></tr></table></figure>
-<p>vue 3移除了<code>create</code> 和<code>beforeCreate</code>方法 合并成了 <code>setup（）{}</code>方法</p>
-<p>组件：对某功能或某模块的封装（alter，loading）<br>插件：对一系列组件的封装（vuex，vue-router）</p>
-<h2 id="v-if-和-v-for-哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？"><a href="#v-if-和-v-for-哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？" class="headerlink" title="v-if 和 v-for 哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？"></a>v-if 和 v-for 哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？</h2><p>源码中找答案 compiler/index.js</p>
 
       
     </div>
@@ -371,8 +376,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/12/hello-world/" rel="next" title="重拾算法题">
-                <i class="fa fa-chevron-left"></i> 重拾算法题
+              <a href="/2021/01/17/%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87%E8%AE%BF%E9%97%AE%E6%83%85%E5%86%B5/" rel="next" title="测试图片访问情况">
+                <i class="fa fa-chevron-left"></i> 测试图片访问情况
               </a>
             
           </div>
@@ -380,10 +385,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/23/v8%20%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" rel="prev" title="v8 内存分配">
-                v8 内存分配 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -506,7 +507,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue篇"><span class="nav-number">1.</span> <span class="nav-text">vue篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-和-v-for-哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？"><span class="nav-number">1.1.</span> <span class="nav-text">v-if 和 v-for 哪个优先级更高？如果两个同时出现，应该怎么优化化得到更好的性能？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习计划"><span class="nav-number">1.</span> <span class="nav-text">学习计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习重点"><span class="nav-number">1.0.1.</span> <span class="nav-text">学习重点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习资源"><span class="nav-number">1.0.2.</span> <span class="nav-text">学习资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#课堂PPT"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">课堂PPT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#教学视频"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">教学视频</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阅读材料"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">阅读材料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习计划-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">学习计划</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
